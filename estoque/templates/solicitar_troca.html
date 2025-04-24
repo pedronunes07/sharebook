@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Solicitar Troca{% endblock %}
+
+{% block content %}
+  <h2>Solicitar Troca do Livro "{{ livro.titulo }}"</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <label>Mensagem para o dono:</label><br>
+    <textarea name="mensagem" rows="4" cols="50"></textarea><br><br>
+    <button type="submit">Enviar Solicitação</button>
+  </form>
+
+  <a href="{% url 'index' %}">← Voltar</a>
+{% endblock %}

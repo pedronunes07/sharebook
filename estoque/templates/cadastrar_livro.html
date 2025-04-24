@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastrar Livro{% endblock %}
+
+{% block content %}
+  <h2>Cadastrar Novo Livro</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+  </form>
+
+  <a href="{% url 'home' %}">← Voltar para Meus Livros</a>
+{% endblock %}

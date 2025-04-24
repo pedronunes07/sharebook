@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Livros{% endblock %}
+
+{% block content %}
+  <h2>Meus Livros</h2>
+
+  {% if livros %}
+    <ul>
+      {% for livro in livros %}
+        <li><strong>{{ livro.titulo }}</strong> — {{ livro.autor }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Você ainda não cadastrou nenhum livro.</p>
+  {% endif %}
+{% endblock %}
+
+<a href="{% url 'editar_livro' livro.id %}">✏️ Editar</a>
+
+<a href="{% url 'excluir_livro' livro.id %}">🗑️ Excluir</a>
+

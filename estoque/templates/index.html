@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Vitrine de Livros{% endblock %}
+
+{% block content %}
+  <h2>Livros disponíveis para troca</h2>
+
+  {% if livros %}
+    <ul>
+      {% for livro in livros %}
+        <li>
+          <strong>{{ livro.titulo }}</strong> — {{ livro.autor }}<br>
+          <em>Dono: {{ livro.usuario.username }}</em>
+          {% if user.is_authenticated and livro.usuario != user %}
+          <a href="{% url 'solicitar_troca' livro.id %}">🔁 Solicitar troca</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Nenhum livro disponível no momento.</p>
+  {% endif %}
+{% endblock %}
+
+
