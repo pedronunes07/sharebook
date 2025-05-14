@@ -2,13 +2,35 @@
 
 {% block title %}Excluir Livro{% endblock %}
 
-{% block content %}
-  <h2>Tem certeza que deseja excluir "{{ livro.titulo }}"?</h2>
-
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Confirmar Exclusão</button>
-  </form>
-
-  <a href="{% url 'home' %}">Cancelar</a>
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/excluir_livro.css' %}">
 {% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <h2>Excluir Livro</h2>
+    
+    <div class="book-info">
+        {% if livro.imagem %}
+            <img src="{{ livro.imagem.url }}" alt="Capa do livro {{ livro.titulo }}">
+        {% endif %}
+        <h3>{{ livro.titulo }}</h3>
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
+        <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+    </div>
+
+    <div class="warning-message">
+        ⚠️ Tem certeza que deseja excluir este livro? Esta ação não pode ser desfeita.
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-group">
+            <a href="{% url 'home' %}" class="btn btn-cancel">Cancelar</a>
+            <button type="submit" class="btn btn-delete">Confirmar Exclusão</button>
+        </div>
+    </form>
+</div>
+{% endblock %} 

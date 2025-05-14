@@ -2,15 +2,43 @@
 
 {% block title %}Solicitar Troca{% endblock %}
 
-{% block content %}
-  <h2>Solicitar Troca do Livro "{{ livro.titulo }}"</h2>
-
-  <form method="post">
-    {% csrf_token %}
-    <label>Mensagem para o dono:</label><br>
-    <textarea name="mensagem" rows="4" cols="50"></textarea><br><br>
-    <button type="submit">Enviar Solicitação</button>
-  </form>
-
-  <a href="{% url 'index' %}">← Voltar</a>
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/solicitar_troca.css' %}">
 {% endblock %}
+
+{% block content %}
+<div class="solicitar-container">
+    <h2>Solicitar Troca</h2>
+    
+    <div class="book-info">
+        {% if livro.imagem %}
+            <img src="{{ livro.imagem.url }}" alt="Capa do livro {{ livro.titulo }}">
+        {% endif %}
+        <div class="book-details">
+            <h3>{{ livro.titulo }}</h3>
+            <p><strong>Autor:</strong> {{ livro.autor }}</p>
+            <p><strong>Páginas:</strong> {{ livro.paginas }}</p>
+            <p><strong>Preço:</strong> R$ {{ livro.preco }}</p>
+        </div>
+    </div>
+
+    <div class="owner-info">
+        <p>📚 Este livro pertence a: {{ livro.usuario.username }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="mensagem">Mensagem para o dono do livro:</label>
+            <textarea name="mensagem" id="mensagem" class="form-control" required 
+                      placeholder="Escreva uma mensagem explicando por que você gostaria de trocar este livro..."></textarea>
+        </div>
+
+        <div class="btn-group">
+            <a href="{% url 'home' %}" class="btn btn-cancel">Cancelar</a>
+            <button type="submit" class="btn btn-solicitar">Enviar Solicitação</button>
+        </div>
+    </form>
+</div>
+{% endblock %} 

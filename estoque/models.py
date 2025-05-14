@@ -7,6 +7,7 @@ class Livro(models.Model):
     autor = models.CharField(max_length=100)
     paginas = models.IntegerField()
     preco = models.DecimalField(max_digits=5, decimal_places=2)
+    imagem = models.ImageField(upload_to='livros/', null=True, blank=True)
     
     def __str__(self):
         return self.titulo

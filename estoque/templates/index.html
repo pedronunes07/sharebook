@@ -2,24 +2,112 @@
 
 {% block title %}Vitrine de Livros{% endblock %}
 
-{% block content %}
-  <h2>Livros disponíveis para troca</h2>
+{% block extra_css %}
+<style>
+    .vitrine {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+        padding: 20px 0;
+    }
 
-  {% if livros %}
-    <ul>
-      {% for livro in livros %}
-        <li>
-          <strong>{{ livro.titulo }}</strong> — {{ livro.autor }}<br>
-          <em>Dono: {{ livro.usuario.username }}</em>
-          {% if user.is_authenticated and livro.usuario != user %}
-          <a href="{% url 'solicitar_troca' livro.id %}">🔁 Solicitar troca</a>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Nenhum livro disponível no momento.</p>
-  {% endif %}
+    .livro-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+    }
+
+    .livro-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .livro-imagem {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .livro-info {
+        padding: 15px;
+    }
+
+    .livro-titulo {
+        font-size: 1.2em;
+        color: #2c3e50;
+        margin: 0 0 10px 0;
+    }
+
+    .livro-autor {
+        color: #7f8c8d;
+        font-style: italic;
+        margin: 0 0 10px 0;
+    }
+
+    .livro-preco {
+        color: #27ae60;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .livro-acoes {
+        padding: 15px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-trocar {
+        background-color: #e67e22;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-trocar:hover {
+        background-color: #d35400;
+    }
+
+    .sem-livros {
+        text-align: center;
+        padding: 50px;
+        color: #7f8c8d;
+        font-size: 1.2em;
+    }
+</style>
 {% endblock %}
 
+{% block content %}
+<h1>Vitrine de Livros</h1>
 
+{% if livros %}
+    <div class="vitrine">
+        {% for livro in livros %}
+            <div class="livro-card">
+                {% if livro.imagem %}
+                    <img src="{{ livro.imagem.url }}" alt="{{ livro.titulo }}" class="livro-imagem">
+                {% else %}
+                    <img src="/static/images/livro-padrao.jpg" alt="Livro sem imagem" class="livro-imagem">
+                {% endif %}
+                <div class="livro-info">
+                    <h3 class="livro-titulo">{{ livro.titulo }}</h3>
+                    <p class="livro-autor">{{ livro.autor }}</p>
+                    <p class="livro-preco">R$ {{ livro.preco }}</p>
+                </div>
+                <div class="livro-acoes">
+                    <a href="{% url 'solicitar_troca' livro.id %}" class="btn-trocar">Solicitar Troca</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="sem-livros">
+        <p>Nenhum livro disponível para troca no momento.</p>
+    </div>
+{% endif %}
+{% endblock %} 

@@ -16,31 +16,38 @@ def home(request):
 @login_required
 def cadastrar_livro(request):
     if request.method == 'POST':
-        form = LivroForm(request.POST)
-        if form.is_valid():
-            livro = form.save(commit=False)
-            livro.usuario = request.user
-            livro.save()
-            return redirect('home')
-    else:
-        form = LivroForm()
-    return render(request, 'cadastrar_livro.html', {'form': form})
+        livro = Livro()
+        livro.titulo = request.POST.get('titulo')
+        livro.autor = request.POST.get('autor')
+        livro.paginas = request.POST.get('paginas')
+        livro.preco = request.POST.get('preco')
+        livro.usuario = request.user
+        
+        if 'imagem' in request.FILES:
+            livro.imagem = request.FILES['imagem']
+            
+        livro.save()
+        return redirect('index')  # Redireciona para a vitrine
 
+    return render(request, 'cadastrar_livro.html')
 
 @login_required
 def editar_livro(request, id):
     livro = get_object_or_404(Livro, id=id, usuario=request.user)
 
     if request.method == 'POST':
-        form = LivroForm(request.POST, instance=livro)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = LivroForm(instance=livro)
+        livro.titulo = request.POST.get('titulo')
+        livro.autor = request.POST.get('autor')
+        livro.paginas = request.POST.get('paginas')
+        livro.preco = request.POST.get('preco')
+        
+        if 'imagem' in request.FILES:
+            livro.imagem = request.FILES['imagem']
+            
+        livro.save()
+        return redirect('home')
 
-    return render(request, 'editar_livro.html', {'form': form, 'livro': livro})
-
+    return render(request, 'editar_livro.html', {'livro': livro})
 
 @login_required
 def excluir_livro(request, id):
@@ -51,7 +58,6 @@ def excluir_livro(request, id):
         return redirect('home')
 
     return render(request, 'excluir_livro.html', {'livro': livro})
-
 
 @login_required
 def solicitar_troca(request, livro_id):
@@ -70,8 +76,6 @@ def solicitar_troca(request, livro_id):
         return redirect('index')
 
     return render(request, 'solicitar_troca.html', {'livro': livro})
-
-
 
 def cadastrar_usuario(request):
     if request.method == 'POST':

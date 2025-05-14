@@ -2,14 +2,139 @@
 
 {% block title %}Cadastrar Livro{% endblock %}
 
-{% block content %}
-  <h2>Cadastrar Novo Livro</h2>
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-  </form>
+    .form-container h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.8em;
+    }
 
-  <a href="{% url 'home' %}">← Voltar para Meus Livros</a>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #34495e;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        outline: none;
+    }
+
+    .form-control[type="number"] {
+        width: 150px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #219a52;
+    }
+
+    .preview-image {
+        max-width: 200px;
+        max-height: 200px;
+        margin-top: 10px;
+        border-radius: 4px;
+        display: none;
+    }
+
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+</style>
 {% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Cadastrar Novo Livro</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" name="titulo" id="titulo" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="autor">Autor:</label>
+            <input type="text" name="autor" id="autor" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="paginas">Número de Páginas:</label>
+            <input type="number" name="paginas" id="paginas" class="form-control" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="preco">Preço (R$):</label>
+            <input type="number" name="preco" id="preco" class="form-control" min="0" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label for="imagem">Imagem do Livro:</label>
+            <input type="file" name="imagem" id="imagem" class="form-control" accept="image/*">
+            <img id="preview" class="preview-image" src="#" alt="Preview da imagem">
+        </div>
+
+        <button type="submit" class="btn-submit">Cadastrar Livro</button>
+    </form>
+</div>
+
+<script>
+    // Preview da imagem
+    document.getElementById('imagem').addEventListener('change', function(e) {
+        const preview = document.getElementById('preview');
+        const file = e.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %} 
