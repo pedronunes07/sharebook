@@ -1,0 +1,64 @@
+/* CSS Global - Biblioteca */
+body {
+    background: #f4f6fb;
+    font-family: 'Georgia', serif;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+h1, h2, h3, h4 {
+    font-family: 'Georgia', serif;
+    color: #2c3e50;
+    margin-top: 0;
+}
+p {
+    color: #444;
+    line-height: 1.6;
+}
+input, select, textarea {
+    font-family: inherit;
+    font-size: 1em;
+}
+button, .btn, input[type="submit"] {
+    background: #6ab04c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover, .btn:hover, input[type="submit"]:hover {
+    background: #218c5a;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    background: #eaeaea;
+}
+::-webkit-scrollbar-thumb {
+    background: #b2bec3;
+    border-radius: 4px;
+}
+footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 1em;
+}
+@media (max-width: 700px) {
+    .container {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+} 

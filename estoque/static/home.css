@@ -1,0 +1,119 @@
+/* Meus Livros - Biblioteca */
+body {
+    background: #f5f6fa;
+    font-family: 'Georgia', serif;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.page-title {
+    color: #218c5a;
+    font-size: 2em;
+    margin: 0;
+    font-family: 'Georgia', serif;
+}
+.btn-novo {
+    background-color: #6ab04c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-weight: 600;
+    font-size: 1em;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+}
+.btn-novo:hover {
+    background-color: #218c5a;
+}
+.meus-livros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+.livro-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    border: 1.5px solid #e1e8ed;
+}
+.livro-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(44,62,80,0.13);
+}
+.livro-imagem {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+    background: #f4f6fb;
+}
+.livro-info {
+    padding: 20px 16px 10px 16px;
+}
+.livro-titulo {
+    font-size: 1.3em;
+    color: #218c5a;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+.livro-autor {
+    color: #7f8c8d;
+    font-style: italic;
+    margin: 0 0 10px 0;
+}
+.livro-preco {
+    color: #6ab04c;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+}
+.livro-acoes {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+}
+.btn-acao {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-weight: 600;
+}
+.btn-editar {
+    background-color: #2980b9;
+    color: white;
+}
+.btn-editar:hover {
+    background-color: #1a5276;
+}
+.btn-excluir {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-excluir:hover {
+    background-color: #c0392b;
+}
+.sem-livros {
+    text-align: center;
+    padding: 50px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(44, 62, 80, 0.10);
+}
+.sem-livros p {
+    color: #7f8c8d;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+} 
