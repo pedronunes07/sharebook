@@ -73,7 +73,37 @@ def solicitar_troca(request, livro_id):
             solicitante=request.user,
             mensagem=mensagem
         )
-        return redirect('index')
+        return redirect('solicitacoes')
+    
+    return render(request, 'solicitar_troca.html', {
+        'livro': livro
+    })
+
+@login_required
+def solicitacoes(request):
+    # Get all requests where the user is the owner of the book
+    solicitacoes_recebidas = SolicitacaoTroca.objects.filter(livro__usuario=request.user)
+    # Get all requests where the user is the requester
+    solicitacoes_enviadas = SolicitacaoTroca.objects.filter(solicitante=request.user)
+    
+    return render(request, 'solicitacoes.html', {
+        'solicitacoes_recebidas': solicitacoes_recebidas,
+        'solicitacoes_enviadas': solicitacoes_enviadas
+    })
+
+@login_required
+def excluir_solicitacao(request, solicitacao_id):
+    solicitacao = get_object_or_404(SolicitacaoTroca, id=solicitacao_id)
+    
+    # Only allow deletion if the user is either the book owner or the requester
+    if solicitacao.livro.usuario != request.user and solicitacao.solicitante != request.user:
+        return redirect('solicitacoes')
+        
+    if request.method == 'POST':
+        solicitacao.delete()
+        return redirect('solicitacoes')
+    
+    return render(request, 'excluir_solicitacao.html', {'solicitacao': solicitacao})
 
     return render(request, 'solicitar_troca.html', {'livro': livro})
 
