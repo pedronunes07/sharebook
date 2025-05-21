@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from .forms import UsuarioForm, LivroForm
-from .models import Livro
+from .models import Livro, SolicitacaoTroca
 
 def index(request):
     livros = Livro.objects.all()
