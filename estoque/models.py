@@ -17,7 +17,7 @@ class SolicitacaoTroca(models.Model):
     solicitante = models.ForeignKey(User, on_delete=models.CASCADE)
     mensagem = models.TextField(blank=True)
     data = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, default='pendente')  # aceito, recusado...
+    status = models.CharField(max_length=20, default='pendente')  
 
     def __str__(self):
         return f"{self.solicitante.username} quer trocar {self.livro.titulo}"
